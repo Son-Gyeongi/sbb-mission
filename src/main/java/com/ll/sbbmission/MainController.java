@@ -12,4 +12,9 @@ public class MainController {
     public String index() {
         return "안녕하세요 sbb에 오신것을 환영합니다.";
     }
+
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/question/list"; // /question/list URL로 페이지를 리다이렉트 하라는 명령어
+    }
 }
