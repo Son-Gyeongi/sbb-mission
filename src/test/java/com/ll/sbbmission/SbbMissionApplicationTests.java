@@ -13,7 +13,8 @@ class SbbMissionApplicationTests {
 
     @Test // 테스트 메서드임을 나타낸다.
     void testJpa() {
-        Question q = this.questionRepository.findBySubject("sbb가 무엇인가요?");
+        Question q = this.questionRepository.findBySubjectAndContent(
+                "sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.");
         Assertions.assertEquals(1, q.getId());
     }
 }
