@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest // 스프링부트 테스트 클래스임을 의미
 class SbbMissionApplicationTests {
 
@@ -13,8 +15,8 @@ class SbbMissionApplicationTests {
 
     @Test // 테스트 메서드임을 나타낸다.
     void testJpa() {
-        Question q = this.questionRepository.findBySubjectAndContent(
-                "sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.");
-        Assertions.assertEquals(1, q.getId());
+        List<Question> qList = this.questionRepository.findBySubjectLike("sbb%");
+        Question q = qList.get(0);
+        Assertions.assertEquals("sbb가 무엇인가요?", q.getSubject());
     }
 }
