@@ -1,8 +1,10 @@
 package com.ll.sbbmission.question;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,10 +40,14 @@ public class QuestionController {
 
     // 질문 등록하기 POST
     @PostMapping("/create")
-    public String questionCreate(@RequestParam String subject,
-                                 @RequestParam String content) {
+    public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+        // 오류 체크
+        if (bindingResult.hasErrors()) {
+            return "question_form";
+        }
+
         // 질문을 저장한다.
-        this.questionService.create(subject, content);
+        this.questionService.create(questionForm.getSubject(), questionForm.getContent());
         return "redirect:/question/list"; // 질문 저장 후 질문 목록으로 이동
     }
 }
