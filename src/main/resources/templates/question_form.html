@@ -1,14 +1,21 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
-    <form th:action="@{/question/create}" method="post">
+    <form th:action="@{/question/create}" th:object="${questionForm}" method="post">
+        <!--        검증에 실패할 경우 오류메시지를 출력-->
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+        </div>
         <div class="mb-3">
             <label for="subject" class="form-label">제목</label>
-            <input type="text" name="subject" id="subject" class="form-control">
+            <!--            th:field="*{subject}" : 이미 입력한 값이 유지-->
+            <!--            해당 태그의 id, name, value 속성이 모두 자동으로 생성되고
+                            타임리프가 value 속성에 기존 값을 채워 넣어 오류가 발생하더라도 기존에 입력한 값이 유지-->
+            <input type="text" th:field="*{subject}" class="form-control">
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
-            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+            <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
         </div>
         <input type="submit" value="저장하기" class="btn btn-primary my-2">
     </form>
