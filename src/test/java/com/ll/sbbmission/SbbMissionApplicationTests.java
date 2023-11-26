@@ -25,7 +25,8 @@ class SbbMissionApplicationTests {
     private AnswerRepository answerRepository;
 
     @Transactional // 테스트가 종료될 때까지 DB 세션이 유지된다.
-    @Test // 테스트 메서드임을 나타낸다.
+    @Test
+        // 테스트 메서드임을 나타낸다.
     void testJpa() {
         Optional<Question> oq = this.questionRepository.findById(2);
         assertTrue(oq.isPresent());

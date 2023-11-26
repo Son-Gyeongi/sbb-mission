@@ -1,5 +1,5 @@
-<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-<div class="container my-3">
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
     <table class="table">
         <thead class="table-dark">
         <tr>
@@ -15,9 +15,10 @@
                 <!--            타임리프는 문자열을 연결(concatenation)할 때 | 문자를 사용 -->
                 <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
             </td>
-<!--            날짜를 보기 좋게 출력하기 위해 타임리프의 #temporals.format 유틸리티를 사용-->
+            <!--            날짜를 보기 좋게 출력하기 위해 타임리프의 #temporals.format 유틸리티를 사용-->
             <td th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>
         </tbody>
     </table>
 </div>
+</html>
