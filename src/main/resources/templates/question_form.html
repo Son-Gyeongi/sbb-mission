@@ -1,11 +1,10 @@
+<!--질문 등록 템플릿-->
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
     <form th:action="@{/question/create}" th:object="${questionForm}" method="post">
         <!--        검증에 실패할 경우 오류메시지를 출력-->
-        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-            <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
-        </div>
+        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
         <div class="mb-3">
             <label for="subject" class="form-label">제목</label>
             <!--            th:field="*{subject}" : 이미 입력한 값이 유지-->
