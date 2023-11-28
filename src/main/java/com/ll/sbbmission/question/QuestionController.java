@@ -21,7 +21,7 @@ public class QuestionController {
     public String list(Model model,
                        @RequestParam(value = "page", defaultValue = "0") int page) {
         // 스프링부트의 페이징은 첫페이지 번호가 1이 아닌 0
-        
+
         Page<Question> paging = this.questionService.getList(page);
         model.addAttribute("paging", paging);
         return "question_list";

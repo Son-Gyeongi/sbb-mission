@@ -13,7 +13,8 @@ class SbbMissionApplicationTests {
     private QuestionService questionService;
 
     @DisplayName("대량 테스트 데이터 만들기")
-    @Test // 테스트 메서드임을 나타낸다.
+    @Test
+        // 테스트 메서드임을 나타낸다.
     void testJpa() {
         for (int i = 1; i <= 300; i++) {
             String subject = String.format("테스트 데이터입니다.:[%03d], i");

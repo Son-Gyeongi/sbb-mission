@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -41,5 +43,17 @@ public class SecurityConfig {
         ;
 
         return http.build();
+    }
+
+    /*
+    BCryptPasswordEncoder 객체를 직접 new로 생성하는 방식보다는 PasswordEncoder 빈(bean)으로
+    등록해서 사용하는 것이 좋다. 왜냐하면 암호화 방식을 변경하면 BCryptPasswordEncoder를 사용한
+    모든 프로그램을 일일이 찾아서 수정해야 하기 때문
+    PasswordEncoder는 BCryptPasswordEncoder의 인터페이스
+     */
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        // BCrypt 해싱 함수(BCrypt hashing function)를 사용해서 비밀번호를 암호화
+        return new BCryptPasswordEncoder();
     }
 }
