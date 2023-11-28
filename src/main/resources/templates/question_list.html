@@ -15,6 +15,11 @@
             <td>
                 <!--            타임리프는 문자열을 연결(concatenation)할 때 | 문자를 사용 -->
                 <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+                <span class="text-danger small ms-2"
+                      th:if="${#lists.size(question.answerList) > 0}"
+                      th:text="${#lists.size(question.answerList)}">
+<!--                    #list.size(이터러블객체)는 이터러블 객체의 사이즈를 반환하는 타임리프의 유틸리티-->
+                </span>
             </td>
             <!--            날짜를 보기 좋게 출력하기 위해 타임리프의 #temporals.format 유틸리티를 사용-->
             <td th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></td>
