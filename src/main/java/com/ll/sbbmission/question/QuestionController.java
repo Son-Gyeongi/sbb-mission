@@ -27,11 +27,14 @@ public class QuestionController {
     // 게시글 모두 불러오기
     @GetMapping("/list")
     public String list(Model model,
-                       @RequestParam(value = "page", defaultValue = "0") int page) {
+                       @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw) {
         // 스프링부트의 페이징은 첫페이지 번호가 1이 아닌 0
 
-        Page<Question> paging = this.questionService.getList(page);
+        Page<Question> paging = this.questionService.getList(page, kw);
         model.addAttribute("paging", paging);
+        // 화면에서 입력한 검색어를 화면에 유지하기 위해 kw 값을 저장
+        model.addAttribute("kw", kw);
         return "question_list";
     }
 
