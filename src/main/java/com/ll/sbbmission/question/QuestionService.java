@@ -52,8 +52,8 @@ public class QuestionService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate")); // 기준 createDate
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        Specification<Question> spec = search(kw); // 검색
-        return this.questionRepository.findAll(spec, pageable);
+        // 검색
+        return this.questionRepository.findAllByKeyword(kw, pageable);
     }
 
     // 질문 상세 페이지 - 1개 조회
