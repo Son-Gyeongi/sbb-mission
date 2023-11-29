@@ -85,7 +85,7 @@ public class QuestionController {
 
         // 수정할 질문의 제목과 내용을 화면에 보여주기 위해 questionForm 객체에 값을 담아서 템플릿으로 전달
         questionForm.setSubject(question.getSubject());
-        questionForm.setContent(questioni.getContent());
+        questionForm.setContent(question.getContent());
         return "question_form";
     }
 
