@@ -73,7 +73,7 @@ public class QuestionController {
     // 질문 수정  GET
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String questonModify(QuestionForm questionForm, @PathVariable("id") Integer id,
+    public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id,
                                 Principal principal) {
         // 질문 찾기
         Question question = this.questionService.getQuestion(id);
@@ -83,8 +83,9 @@ public class QuestionController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
         }
 
-        questionForm.setSubject(questionForm.getSubject());
-        questionForm.setContent(questionForm.getContent());
+        // 수정할 질문의 제목과 내용을 화면에 보여주기 위해 questionForm 객체에 값을 담아서 템플릿으로 전달
+        questionForm.setSubject(question.getSubject());
+        questionForm.setContent(questioni.getContent());
         return "question_form";
     }
 
