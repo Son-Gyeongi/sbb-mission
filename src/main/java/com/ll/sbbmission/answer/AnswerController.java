@@ -102,4 +102,17 @@ public class AnswerController {
         // 답변을 삭제한 후에는 해당 답변이 있던 질문상세 화면으로 리다이렉트
         return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
     }
+
+    // 답변 추천인 저장
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String answerVote(Principal principal, @PathVariable("id") Integer id) {
+        // 답변 조회
+        Answer answer = this.answerService.getAnswer(id);
+        // 사용자 조회
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.answerService.vote(answer, siteUser);
+        // 오류가 없다면 질문 상세화면으로 리다이렉트
+        return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+    }
 }
