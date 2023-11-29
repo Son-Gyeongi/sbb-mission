@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,4 +32,7 @@ public class Answer {
     private SiteUser author;
 
     private LocalDateTime modifyDate; // 수정 일시
+
+    @ManyToMany // 대등한 관계
+    Set<SiteUser> voter; // 추천인, 추천인은 중복되면 안되기 때문에 Set을 썼다. Set은 중복을 허용하지 않는 자료형
 }

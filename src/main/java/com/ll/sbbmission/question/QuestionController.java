@@ -74,7 +74,7 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id,
-                                Principal principal) {
+                                 Principal principal) {
         // 질문 찾기
         Question question = this.questionService.getQuestion(id);
 
@@ -121,5 +121,17 @@ public class QuestionController {
 
         this.questionService.delete(question);
         return "redirect:/";
+    }
+
+    // 질문 추천인 저장
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String questionVote(Principal principal, @PathVariable("id") Integer id) {
+        // 질문 조회
+        Question question = this.questionService.getQuestion(id);
+        // 사용자 조회
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.questionService.vote(question, siteUser);
+        return String.format("redirect:/question/detail/%s", id); // 오류가 없다면 질문 상세화면으로 리다이렉트
     }
 }
