@@ -42,10 +42,16 @@ public class SecurityConfig {
                                         XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN
                                 ))
                 )
-                .formLogin(
+                .formLogin( // 스프링 시큐리티에서 구현한 로그인
                         (formLogin) -> formLogin
                                 .loginPage("/user/login") // 로그인 설정을 담당하는 부분으로 로그인 페이지의 URL
                                 .defaultSuccessUrl("/") // 로그인 성공시에 이동하는 디폴트 페이지는 루트 URL
+                )
+                .logout( // 스프링 시큐리티에서 구현한 로그아웃
+                        (logout) -> logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")) // 로그아웃 URL
+                                .logoutSuccessUrl("/") // 로그아웃이 성공하면 루트(/) 페이지로 이동
+                                .invalidateHttpSession(true) // 로그아웃시 생성된 사용자 세션도 삭제하도록 처리
                 )
         ;
 
