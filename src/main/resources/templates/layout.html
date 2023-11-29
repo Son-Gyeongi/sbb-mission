@@ -19,5 +19,8 @@
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
 <!-- Bootstrap JS -->
 <script th:src="@{/bootstrap.min.js}"></script>
+<!-- 자바스크립트 Start / 화면 렌더링이 완료된 후에 자바스크립트가 실행 -->
+<th:block layout:fragment="script"></th:block>
+<!-- 자바스크립트 End -->
 </body>
 </html>

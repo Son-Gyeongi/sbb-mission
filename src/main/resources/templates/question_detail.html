@@ -14,13 +14,17 @@
                     <div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
-<!--            수정 -->
+            <!--            수정 -->
             <div class="my-3">
+                <!--                로그인한 사용자와 글쓴이가 동일한 경우에만 노출-->
                 <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
                    th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
                    th:text="수정"></a>
-<!--                로그인한 사용자와 글쓴이가 동일한 경우에만 노출-->
+                <a href="javascript:void(0);" th:data-uri="@{|/question/delete/${question.id}|}"
+                   class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
+                   th:text="삭제"></a>
             </div>
         </div>
     </div>
@@ -47,11 +51,22 @@
     <form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
         <!--        검증에 실패할 경우 오류메시지를 출력-->
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-<!--        sec:authorize="isAnonymous()" - 현재 로그아웃 상태-->
-        <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control" rows="10"></textarea>
-<!--        sec:authorize="isAuthenticated()" - 현재 로그인 상태-->
+        <!--        sec:authorize="isAnonymous()" - 현재 로그아웃 상태-->
+        <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control"
+                  rows="10"></textarea>
+        <!--        sec:authorize="isAuthenticated()" - 현재 로그인 상태-->
         <textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>
         <input type="submit" value="답변등록" class="btn btn-primary my-2">
     </form>
 </div>
+<script layout:fragment="script" type='text/javascript'>
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function (element) {
+        element.addEventListener('click', function () {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+</script>
 </html>
