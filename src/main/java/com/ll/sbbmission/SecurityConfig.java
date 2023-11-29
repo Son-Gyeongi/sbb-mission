@@ -2,6 +2,8 @@ package com.ll.sbbmission;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,6 +42,11 @@ public class SecurityConfig {
                                         XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN
                                 ))
                 )
+                .formLogin(
+                        (formLogin) -> formLogin
+                                .loginPage("/user/login") // 로그인 설정을 담당하는 부분으로 로그인 페이지의 URL
+                                .defaultSuccessUrl("/") // 로그인 성공시에 이동하는 디폴트 페이지는 루트 URL
+                )
         ;
 
         return http.build();
@@ -55,5 +62,12 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         // BCrypt 해싱 함수(BCrypt hashing function)를 사용해서 비밀번호를 암호화
         return new BCryptPasswordEncoder();
+    }
+
+    // 스프링 시큐리티의 인증을 담당
+    // 사용자 인증시 UserSecurityService와 PasswordEncoder를 사용
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }
