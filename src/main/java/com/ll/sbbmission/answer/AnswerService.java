@@ -16,7 +16,7 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
 
     // 답변 등록
-    public void create(Question question, String content, SiteUser author) {
+    public Answer create(Question question, String content, SiteUser author) {
         // 입력으로 받은 question과 content, author를 사용하여 Answer 객체를 생성하여 저장
         Answer answer = new Answer();
         answer.setContent(content);
@@ -24,6 +24,7 @@ public class AnswerService {
         answer.setQuestion(question);
         answer.setAuthor(author);
         this.answerRepository.save(answer);
+        return answer;
     }
 
     // 답변 조회
