@@ -6,6 +6,7 @@ import com.ll.sbbmission.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,7 @@ public class QuestionController {
     }
 
     // 질문 등록 하러 가기 GET
+    @PreAuthorize("isAuthenticated()") // 로그인이 필요한 메서드
     @GetMapping("/create")
     public String questionCreate(QuestionForm questionForm) { // 매개변수의 형태가 다른 경우에 가능하다. - 메서드 오버로딩
         // QuestionForm과 같이 매개변수로 바인딩한 객체는 Model 객체로 전달하지 않아도 템플릿에서 사용이 가능
@@ -50,6 +52,7 @@ public class QuestionController {
     }
 
     // 질문 등록하기 POST
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult,
                                  Principal principal) {
